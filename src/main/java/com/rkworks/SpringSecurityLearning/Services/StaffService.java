@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,12 +18,13 @@ public class StaffService implements UserDetailsService {
     StaffRepo staffRepo;
 
 
-
+  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);// Creating a password encoder
 
     public Staff savestaff(Staff staff){
     Staff stf =null;
         if(staffRepo.findByUsername(staff.getUsername())==null){
         System.out.println("reached service");
+        staff.setPassword(encoder.encode(staff.getPassword()));//ENCODING AND SAVING PASSWORD IN DB.
         staffRepo.save(staff);
         stf=staff;
         }
