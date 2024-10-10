@@ -16,6 +16,5 @@ public class SecurityController {
 
         return "Entered the secure get method" + request.getSession().getId();
 
-
     }
 }
