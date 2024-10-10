@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -66,7 +67,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider(){//Authentication provider is an interface.
         DaoAuthenticationProvider provider  = new DaoAuthenticationProvider();//DaoAp is a class which implement the AUTH interface
-        provider.setPasswordEncoder( NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(10));//TO CHECK WHETHER THE HASHED PASSWORD IS CORRECT .
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
